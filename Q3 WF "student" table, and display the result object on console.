@@ -1,0 +1,46 @@
+Create a node.js file that Insert Multiple Records in "student" table, and display the result object on console.
+
+var mysql = require('mysql');
+var con = mysql.createConnection({
+host: "localhost",
+user: "root",
+password: "root",
+database: "msc"
+});
+con.connect(function(err) {
+if (err) throw err;
+console.log("Connected!");
+var sql = "INSERT INTO student (rollno,name, percentage) VALUES ?";
+var values = [
+[1,'manali', 77.6],
+[2,'shruti', 89.6],
+[3,'shreya', 91.6]
+];
+con.query(sql, [values], function (err, result)
+{
+if (err) throw err;
+console.log("Number of records inserted: " + result.affectedRows);
+});
+con.query("SELECT * FROM student", function (err, result, fields) {
+if (err) throw err;
+console.log(result);
+});
+});
+------------------------------------------------------------------------------------------------------------------
+Execution Steps –
+Npm install mysql
+1) It establishes a connection to a MySQL database using the provided database credentials.
+2) Defines an array of student data to be inserted into the "student" table.
+3) Inserts the student records into the "student" table in the database.
+4) Displays the result object, which includes information about the inserted records, on the console.
+5) To execute the script: Save the script in a .js file, for example, insertStudents.js.
+6) Replace the database connection details with your own.
+7) Replace the students array with the data you want to insert.
+8) Open your terminal or command prompt.
+
+Number of records inserted: 3
+[
+RowDataPacket { rollno: 1, name:’manali’, percentage: 77.6 },
+RowDataPacket { rollno: 2, name:’shruti’, percentage: 89.6 },
+RowDataPacket { rollno: 3, name:’shreya’, percentage: 91.6 }
+]
